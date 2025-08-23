@@ -1,10 +1,13 @@
 import React from 'react';
+import Header from '../components/Header';
+import '../css/pages/ShowCreators.css';
+import backgroundImage from '../assets/header_wallpaper8.png';
 
 function ShowCreators() {
   return (
-    <div style={{ padding: '20px', color: 'white', backgroundColor: 'black' }}>
-      <h1>CREATORVERSE</h1>
-      <p>This is a test - if you can see this, routing is working!</p>
+    
+    <div>
+    < Header backgroundImage={backgroundImage} />
     </div>
   );
 }

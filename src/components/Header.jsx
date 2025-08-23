@@ -1,12 +1,19 @@
 import React from 'react';
-import './Header.css';
+import '../css/components/Header.css';
 
-function Header() {
+const Header = ({ backgroundImage }) => {
   return (
     <header className="header">
-      <h1 className="title">CREATORVERSE</h1>
+      <div 
+        className="header-background"
+        style={backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}}
+      ></div>
+      <div className="header-overlay"></div>
+      <div className="header-content">
+        <h1 className="header-title">CREATORVERSE</h1>
+      </div>
     </header>
   );
-}
+};
 
 export default Header;
