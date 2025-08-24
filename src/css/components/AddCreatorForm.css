@@ -1,0 +1,9 @@
+main {
+    display: flex;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    justify-content: center;
+    width: 100vw !important
+  }
