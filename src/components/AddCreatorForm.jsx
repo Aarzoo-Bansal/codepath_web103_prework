@@ -1,31 +1,61 @@
 import React, { useState } from 'react';
 import { supabase } from '../client';
 import '../css/components/AddCreatorForm.css';
+import { FaYoutube } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { FaTwitter } from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
+
 
 const AddCreatorForm = ({ onCancel, onSubmit }) => {
     const [creatorData, setCreatorData] = useState({
         name: '',
         url: '',
         description: '',
-        imageURL: null,
+        instaURL: '',
+        youtubeURL: '',
+        twitterURL: '',
     });
 
     const handleChange = (e) => {
-        setCreatorData( {
+        setCreatorData({
             ...creatorData,
-            [e.target.name] : e.target.value
+            [e.target.name]: e.target.value
         });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!creatorData.instaURL && !creatorData.youtubeURL && !creatorData.twitterURL) {
+            alert("Please provide at least one social media link");
+            return;
+        }
+
         console.log('Form submitted:', creatorData);
+        if(creatorData.instaURL){
+            creatorData.instaURL = 'https://www.instagram.com/' + creatorData.instaURL;
+        }
+        if(creatorData.youtubeURL){
+            creatorData.youtubeURL = 'https://www.youtube.com/channel/' + creatorData.youtubeURL;
+        }
+        if(creatorData.twitterURL){
+            creatorData.twitterURL = 'https://x.com/' + creatorData.twitterURL;
+        }
+        
 
         const { data, error } = await supabase
-        .from ('creators')
-        .insert({name: creatorData.name, url: creatorData.url, description: creatorData.description, imageURL: creatorData.imageURL})
-        .select()
+            .from('creators')
+            .insert({
+                name: creatorData.name,
+                instaURL: creatorData.instaURL,
+                youtubeURL: creatorData.youtubeURL,
+                twitterURL: creatorData.twitterURL,
+                description: creatorData.description,
+                imageURL: creatorData.imageURL
+            })
+            .select();
+
         if (error) {
             console.error('Error creating creator:', error);
             alert("Failed to create creator");
@@ -36,84 +66,148 @@ const AddCreatorForm = ({ onCancel, onSubmit }) => {
     };
 
     return (
-        <main>
-            <section>
+        <main className="container" style={{ marginTop: '0px' }}>
+            <section className="section-width">
                 <hgroup>
-                    <h2> Add a New Creator</h2>
+                    <h2 className="heading"> Add a New Creator</h2>
                     <p>Share your favorite creators with the community!</p>
                 </hgroup>
 
-                <article>
-                    <form onSubmit={handleSubmit}>
-                        <fieldset>
-                            <div className="form-group">
-                            <label>
+
+                <form onSubmit={handleSubmit}>
+                    <fieldset>
+                        <div className="individual-input">
+                            <label className='label'>
                                 Name
-                                <input 
+                                <input
                                     type="text"
                                     name="name"
                                     value={creatorData.name}
                                     onChange={handleChange}
-                                    placeholder="Enter creator's name"
                                     required
                                 />
                             </label>
 
-                            </div>
-                            
+                        </div>
 
-                            <label>
-                                Social Media URL
-                                <input
-                                    type="url"
-                                    name="url"
-                                    value={creatorData.url}
-                                    onChange={handleChange}
-                                    placeholder="https://www.instagram.com/username"
-                                    required
-                                />
-                            </label>
-
-                            <label>
+                        <div className="individual-input">
+                            <label className='label'>
                                 Description
+                                <br></br>
+                                <small className="tips">Provide a description of your creator. Who are they? What do they do? What makes them unique?</small>
                                 <textarea
                                     name="description"
                                     value={creatorData.description}
                                     onChange={handleChange}
-                                    placeholder="Tell us about this creator..."
                                     rows="4"
                                     required
                                 />
                             </label>
+                        </div>
 
-                            <label>
+                        <div className="individual-input">
+                            <label className='label'>
                                 Image URL
+                                <br></br>
+                                <small className="tips">Provide a link to an image of your creator. Be sure to include the http:// or https://</small>
                                 <input
                                     type="url"
                                     name="imageURL"
                                     value={creatorData.imageURL}
-                                    onChange={handleChange} 
-                                    placeholder="https://www.example.com/image.jpg"
+                                    onChange={handleChange}
                                 />
-                                <small>Optional: Add a profile image for the creator</small>
                             </label>
-                        </fieldset>
-
-                        <div role="group">
-                            <button
-                                type="button"
-                                className="secondary outline"
-                                onClick={onCancel}
-                            >
-                                Cancel
-                            </button>
-
-                            <button 
-                            type="submit">
-                                Add Creator</button>
                         </div>
-                    </form>
-                </article>
+
+                        <div className="individual-input">
+                            <h3>SOCIAL MEDIA LINKS</h3>
+                            <small className="tips">Provide atleast one of the creator's social media links. This will help users find them and follow them.</small>
+                            <br></br>
+                            <br></br>
+
+                            <label className='label' style={{padding: '10px'}}>
+                                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' , marginBottom: '5px'}}>
+                                    <span style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                                        <span className="fa-brands fa-instagram" aria-hidden="true" style={{ display: 'flex', alignItems: 'center' }}>
+                                            <FaYoutube /> 
+                                        </span>
+                                        <span style={{ fontSize: '20px', marginLeft: '10px', display: 'flex', alignItems: 'center' }}>Youtube</span>
+                                    </span>
+                                </span>
+                                <br></br>
+                                <small className="tips">The creator's Youtube handle (without the @)  </small>
+
+                                <input
+                                    type="text"
+                                    name="youtubeURL"
+                                    value={creatorData.youtubeURL}
+                                    onChange={handleChange}
+                                />
+                            </label>
+
+
+                            <label className='label' style={{padding: '10px'}}>
+                                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' , marginBottom: '5px'}}>
+                                    <span style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                                        <span className="fa-brands fa-instagram" aria-hidden="true" style={{ display: 'flex', alignItems: 'center' }}>
+                                            <FaInstagram />
+                                        </span>
+                                        <span style={{ fontSize: '20px', marginLeft: '10px', display: 'flex', alignItems: 'center' }}>Instagram</span>
+                                    </span>
+                                </span>
+                                <br></br>
+                                <small className="tips">The creator's Instagram handle (without the @)  </small>
+
+                                <input
+                                    type="text"
+                                    name="instaURL"
+                                    value={creatorData.instaURL}
+                                    onChange={handleChange}
+                                />
+                            </label>
+
+                            <label className='label' style={{padding: '10px'}}>
+                                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' , marginBottom: '5px'}}>
+                                    <span style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                                        <span className="fa-brands fa-instagram" aria-hidden="true" style={{ display: 'flex', alignItems: 'center' }}>
+                                            <FaSquareXTwitter />
+                                        </span>
+                                        <span style={{ fontSize: '20px', marginLeft: '10px', display: 'flex', alignItems: 'center' }}>X (Twitter)</span>
+                                    </span>
+                                </span>
+                                <br></br>
+                                <small className="tips">The creator's Instagram handle (without the @)  </small>
+
+                                <input
+                                    type="text"
+                                    name="twitterURL"
+                                    value={creatorData.twitterURL}
+                                    onChange={handleChange}
+                                />
+                            </label>
+
+                            
+                        </div>
+
+                    </fieldset>
+
+                    <div role="group" className="individual-input">
+                        <button
+                            role="button"
+                            type="button"
+                            className="secondary"
+                            onClick={onCancel}
+                        >Cancel
+                        </button>
+
+                        <button
+                            role="button"
+                            type="submit"
+                            className="primary"
+                        >Add Creator</button>
+                    </div>
+                </form>
+
             </section>
         </main>
 

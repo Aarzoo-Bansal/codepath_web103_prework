@@ -5,5 +5,60 @@ main {
     padding-top: 20px;
     padding-bottom: 20px;
     justify-content: center;
-    width: 100vw !important
+    width: 100vw !important;
+    position: relative;
+    top: 100px;
+  }
+
+  .heading {
+    font-family: 'Pacifico', cursive !important;
+    font-weight: 400 !important;
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+    /* color: #87CEEB; */
+    color: rgb(43, 153, 226);
+    font-size: 2.5rem;
+    animation: pulse 4s ease-in-out infinite alternate;
+    text-shadow: 0 0 20px rgba(135, 206, 235, 0.3);
+  }
+
+  h3 {
+    font-family: 'Arial Black', 'Helvetica', 'sans-serif';
+    color: rgb(43, 153, 226);
+    font-size: 1.6vw;
+    margin-bottom: 2vh;
+  }
+
+  p{
+    font-family: cursive !important;
+  }
+
+  .section-width {
+    width: 100%;
+  }
+
+  fieldset {
+    padding: 20px;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+    font-family: normal !important;
+    text-align: left;
+  }
+
+  .tips {
+    font-size: 0.7rem;
+    color: #346274;
+    font-style: italic;
+    font-weight: normal !important;
+    font-family: 'Poppins', 'Verdana', 'sans-serif';
+  }
+
+  .label {
+    font-weight: bold;
+    font-family: 'Poppins', 'Verdana', 'sans-serif';
+  }
+
+  .individual-input {
+    padding: 10px;
   }
