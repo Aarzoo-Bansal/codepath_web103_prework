@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import { supabase } from '../client';
 import '../css/components/AddCreatorForm.css';
-import { FaYoutube, FaInstagram, FaTiktok } from "react-icons/fa";
-import { FaSquareXTwitter } from "react-icons/fa6";
 import Modal from './Modal';
 import { useModal } from '../hooks/useModal';
+import { FaYoutube } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { FaTiktok } from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
 
 
-const AddCreatorForm = ({ onCancel, onSubmit }) => {
+const EditCreatorForm = ({ creator,onCancel, onSubmit }) => {
     const [creatorData, setCreatorData] = useState({
-        name: '',
-        tagline: '',
-        description: '',
-        instaURL: '',
-        youtubeURL: '',
-        twitterURL: '',
-        tiktokURL: '',
-        imageURL: ''
+        name: creator.name,
+        tagline: creator.tagline,
+        description: creator.description,
+        instaURL: creator.instaURL.split('https://www.instagram.com/')[1],
+        youtubeURL: creator.youtubeURL.split('https://www.youtube.com/channel/')[1],
+        twitterURL: creator.twitterURL.split('https://x.com/')[1],
+        tiktokURL: creator.tiktokURL.split('https://www.tiktok.com/@')[1],
+        imageURL: creator.imageURL
     });
 
     const { modal, hideModal, showSuccess, showError, showWarning } = useModal();
@@ -32,11 +34,7 @@ const AddCreatorForm = ({ onCancel, onSubmit }) => {
         e.preventDefault();
 
         if (!creatorData.instaURL && !creatorData.youtubeURL && !creatorData.twitterURL) {
-            console.log('No social media links provided');
-            showWarning(
-                "Please provide at least one social media link to help users find this creator.",
-                "Social Media Required"
-            );
+            alert("Please provide at least one social media link");
             return;
         }
 
@@ -57,7 +55,7 @@ const AddCreatorForm = ({ onCancel, onSubmit }) => {
 
         const { data, error } = await supabase
             .from('creators')
-            .insert({
+            .update({
                 name: creatorData.name,
                 tagline: creatorData.tagline,
                 instaURL: creatorData.instaURL,
@@ -67,24 +65,23 @@ const AddCreatorForm = ({ onCancel, onSubmit }) => {
                 description: creatorData.description,
                 imageURL: creatorData.imageURL
             })
+            .eq('id', creator.id)
             .select();
 
         if (error) {
-            console.error('Error creating creator:', error);
+            console.error('Error updating creator:', error);
             showError(
-                "Failed to create creator",
-                "Error Creating Creator"
+                "Failed to update creator",
+                "Error Updating Creator"
             );
         } else {
             showSuccess(
-                "Creator created successfully! You can now view it in the creators list.",
-                "Creator Created"
+                "Creator updated successfully! You can now view it in the creators list.",
+                "Creator Updated"
             );
-            
-    
             setCreatorData(prev => ({ ...prev, _pendingSubmit: data }));
-            
             setTimeout(() => {
+                // Modal should now be visible
             }, 100);
         }
     };
@@ -94,7 +91,7 @@ const AddCreatorForm = ({ onCancel, onSubmit }) => {
         <main className="container" style={{ marginTop: '0px' }}>
             <section className="section-width">
                 <hgroup>
-                    <h2 className="heading"> Add a New Creator</h2>
+                    <h2 className="heading"> Edit Creator</h2>
                     <p>Share your favorite creators with the community!</p>
                 </hgroup>
 
@@ -265,7 +262,7 @@ const AddCreatorForm = ({ onCancel, onSubmit }) => {
                             role="button"
                             type="submit"
                             className="primary"
-                        >Add Creator</button>
+                        >Edit Creator</button>
                     </div>
                 </form>
 
@@ -276,10 +273,8 @@ const AddCreatorForm = ({ onCancel, onSubmit }) => {
                 isOpen={modal.isOpen}
                 onClose={() => {
                     hideModal();
-                    // If this was a success modal and we have pending submit data, submit now
                     if (modal.type === 'success' && creatorData._pendingSubmit) {
                         onSubmit(creatorData._pendingSubmit);
-                        // Clear the pending submit data
                         setCreatorData(prev => {
                             const { _pendingSubmit, ...rest } = prev;
                             return rest;
@@ -298,4 +293,4 @@ const AddCreatorForm = ({ onCancel, onSubmit }) => {
     );
 };
 
-export default AddCreatorForm;
+export default EditCreatorForm;

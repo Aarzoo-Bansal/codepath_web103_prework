@@ -28,7 +28,6 @@ const CreatorCard = ({ creator, onEdit, onDelete, onView }) => {
                
                 <div className="image-overlay"></div>
                 
-            
                 <div className="card-actions">
                     <button 
                         onClick={() => onView(creator)}
@@ -52,15 +51,14 @@ const CreatorCard = ({ creator, onEdit, onDelete, onView }) => {
                     </button>
                 </div>
                 
-                {/* Content positioned at bottom */}
+              
                 <div className="card-content">
-                    {/* Creator Info */}
                     <div className="creator-info">
                         <h3 className="creator-name">{name}</h3>
                         <p className="creator-description">{tagline}</p>
                     </div>
 
-                    {/* Social Media Links */}
+                  
                     <div className="social-links">
                         {youtubeURL && (
                             <a 

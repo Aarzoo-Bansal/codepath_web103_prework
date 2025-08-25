@@ -2,8 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import Header from '../components/Header';
 import '../css/pages/ShowCreators.css';
 import AddCreatorForm from '../components/AddCreatorForm';
+import EditCreatorForm from '../components/EditCreatorForm';
 import backgroundImage from '../assets/header_wallpaper8.png';
 import CreatorsList from '../components/CreatorsList';
+import { FaSquareXTwitter } from "react-icons/fa6";
+import { FaYoutube, FaInstagram, FaTwitter, FaTiktok } from 'react-icons/fa';
 
 const ShowCreators = () => {
     const [currentView, setCurrentView] = useState('');
@@ -40,7 +43,6 @@ const ShowCreators = () => {
         setSelectedCreator(creator);
         setCurrentView('edit');
         setHasUserClicked(true);
-        // Scroll to form
         setTimeout(() => {
             if (formRef.current) {
                 formRef.current.scrollIntoView({ 
@@ -55,7 +57,6 @@ const ShowCreators = () => {
         setSelectedCreator(creator);
         setCurrentView('detail');
         setHasUserClicked(true);
-        // Scroll to detail view
         setTimeout(() => {
             if (creatorsRef.current) {
                 creatorsRef.current.scrollIntoView({ 
@@ -70,7 +71,6 @@ const ShowCreators = () => {
         setHasUserClicked(true);
         setCurrentView('view');
         setSelectedCreator(null);
-        // Scroll back to creators list
         setTimeout(() => {
             if (creatorsRef.current) {
                 creatorsRef.current.scrollIntoView({ 
@@ -85,7 +85,6 @@ const ShowCreators = () => {
         setHasUserClicked(true);
         setCurrentView('view');
         setSelectedCreator(null);
-        // Scroll back to creators list
         setTimeout(() => {
             if (creatorsRef.current) {
                 creatorsRef.current.scrollIntoView({ 
@@ -107,7 +106,6 @@ const ShowCreators = () => {
                 setHasUserClicked(true);
                 setCurrentView('view');
                 setSelectedCreator(null);
-                // Force scroll to creators list
                 setTimeout(() => {
                     if (creatorsRef.current) {
                         creatorsRef.current.scrollIntoView({ 
@@ -128,7 +126,6 @@ const ShowCreators = () => {
                 setHasUserClicked(true);
                 setCurrentView('add');
                 setSelectedCreator(null);
-                // Force scroll to form
                 setTimeout(() => {
                     if (formRef.current) {
                         formRef.current.scrollIntoView({ 
@@ -142,39 +139,6 @@ const ShowCreators = () => {
     ];
 
     return (
-        // <div className="show-creators">
-        //     <Header
-        //         backgroundImage={backgroundImage}
-        //         showNavigation={true}
-        //         navigationItems={navigationItems}
-        //         title="CREATORVERSE"
-        //     />
-
-        //     {currentView === 'view' ? (
-        //         <div className="content-area" ref={creatorsRef}>
-        //             <div className="creators-container">
-        //                 <h2 className="content-title">Creators</h2>
-        //                 <div className="creators-list">
-        //                     <p className="no-creators-message">NO CREATORS YET 😔</p>
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     ) : (
-        //         <div ref={formRef}>
-        //             <AddCreatorForm
-        //                 onCancel={() => {
-        //                     setHasUserClicked(true);
-        //                     setCurrentView('view');
-        //                 }}
-        //                 onSubmit={() => {
-        //                     setHasUserClicked(true);
-        //                     setCurrentView('view');
-        //                 }}
-        //             />
-        //         </div>
-        //     )}
-        // </div>
-
         <div className="show-creators">
         <Header
             backgroundImage={backgroundImage}
@@ -198,22 +162,22 @@ const ShowCreators = () => {
             </div>
         )}
 
-        {/* CREATOR DETAIL VIEW */}
         {currentView === 'detail' && selectedCreator && (
             <div className="content-area" ref={creatorsRef}>
                 <div className="creators-container">
-                    <div style={{ marginBottom: '1rem' }}>
+                    <div className="creator-detail-actions">
                         <button 
+                            role="button"
                             onClick={() => {
                                 setCurrentView('view');
                                 setSelectedCreator(null);
                             }}
                             className="secondary"
-                            style={{ marginRight: '1rem' }}
                         >
                             ← Back to List
                         </button>
                         <button 
+                            role="button"
                             onClick={() => handleEditCreator(selectedCreator)}
                             className="primary"
                         >
@@ -227,22 +191,20 @@ const ShowCreators = () => {
                                 <img 
                                     src={selectedCreator.imageURL} 
                                     alt={`${selectedCreator.name} profile`}
-                                    style={{ 
-                                        width: '100%', 
-                                        maxWidth: '300px', 
-                                        height: '300px', 
-                                        objectFit: 'cover',
-                                        borderRadius: 'var(--pico-border-radius)'
-                                    }}
                                 />
                             </div>
                         )}
                         
                         <hgroup>
                             <h1>{selectedCreator.name}</h1>
+                            {selectedCreator.tagline && (
+                                <p className="tagline">{selectedCreator.tagline}</p>
+                            )}
                         </hgroup>
                         
-                        <p>{selectedCreator.description}</p>
+                        {selectedCreator.description && (
+                            <p className="description">{selectedCreator.description}</p>
+                        )}
                         
                         <div className="social-links">
                             {selectedCreator.youtubeURL && (
@@ -252,7 +214,10 @@ const ShowCreators = () => {
                                     rel="noopener noreferrer"
                                     className="social-link youtube"
                                 >
-                                    🎥 YouTube
+                                    <div className="social-icon-container">
+                <FaYoutube className="social-icon" />
+                <span className="social-text">YouTube</span>
+            </div>
                                 </a>
                             )}
                             {selectedCreator.instaURL && (
@@ -262,7 +227,10 @@ const ShowCreators = () => {
                                     rel="noopener noreferrer"
                                     className="social-link instagram"
                                 >
-                                    📷 Instagram
+                                    <div className="social-icon-container">
+                <FaInstagram className="social-icon" />
+                <span className="social-text">Instagram</span>
+            </div>
                                 </a>
                             )}
                             {selectedCreator.twitterURL && (
@@ -272,7 +240,24 @@ const ShowCreators = () => {
                                     rel="noopener noreferrer"
                                     className="social-link twitter"
                                 >
-                                    🐦 Twitter
+                                    <div className="social-icon-container">
+                <FaSquareXTwitter className="social-icon" />
+                <span className="social-text">Twitter</span>
+            </div>
+                                </a>
+                            )}
+                            {selectedCreator.tiktokURL && (
+                                <a 
+                                    href={selectedCreator.tiktokURL.startsWith('http') ? selectedCreator.tiktokURL : `https://tiktok.com/@${selectedCreator.tiktokURL}`}
+                                    target="_blank" 
+                                    
+                                    rel="noopener noreferrer"
+                                    className="social-link tiktok"
+                                >
+                                    <div className="social-icon-container">
+                <FaTiktok className="social-icon" />
+                <span className="social-text">TikTok</span>
+            </div>
                                 </a>
                             )}
                         </div>
@@ -281,12 +266,21 @@ const ShowCreators = () => {
             </div>
         )}
 
+        {(currentView === 'edit') && (
+            <div ref={formRef}>
+            <EditCreatorForm
+                creator={selectedCreator}
+                onCancel={handleFormCancel}
+                onSubmit={handleFormSubmit}
+            />
+        </div>
+        )} 
+        
+
         {/* ADD CREATOR FORM */}
-        {(currentView === 'add' || currentView === 'edit') && (
+        {(currentView === 'add') && (
             <div ref={formRef}>
                 <AddCreatorForm
-                    creator={currentView === 'edit' ? selectedCreator : null}
-                    isEditing={currentView === 'edit'}
                     onCancel={handleFormCancel}
                     onSubmit={handleFormSubmit}
                 />

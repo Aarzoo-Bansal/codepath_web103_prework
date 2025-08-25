@@ -2,13 +2,21 @@ import React, { useState, useEffect } from 'react';
 import CreatorCard from './creator';
 import { supabase } from '../client';
 import '../css/components/CreatorCard.css';
+import { useModal } from '../hooks/useModal';
+import Modal from './Modal';
 
 const CreatorsList = ({ onEdit, onView }) => {
     const [creators, setCreators] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [deleteModal, setDeleteModal] = useState({
+        isOpen: false,
+        creatorId: null,
+        creatorName: ''
+    });
+    
+    const { showSuccess, showError } = useModal();
 
-    // Fetch creators from Supabase
     useEffect(() => {
         fetchCreators();
     }, []);
@@ -34,30 +42,53 @@ const CreatorsList = ({ onEdit, onView }) => {
         }
     };
 
-    // Delete creator
-    const handleDelete = async (creatorId) => {
-        if (window.confirm('Are you sure you want to delete this creator?')) {
-            try {
-                const { error } = await supabase
-                    .from('creators')
-                    .delete()
-                    .eq('id', creatorId);
+    const showDeleteConfirmation = (creatorId, creatorName) => {
+        setDeleteModal({
+            isOpen: true,
+            creatorId,
+            creatorName
+        });
+    };
 
-                if (error) {
-                    throw error;
-                }
+    const hideDeleteModal = () => {
+        setDeleteModal({
+            isOpen: false,
+            creatorId: null,
+            creatorName: ''
+        });
+    };
 
-                // Remove from local state
-                setCreators(creators.filter(creator => creator.id !== creatorId));
-                alert('Creator deleted successfully!');
-            } catch (err) {
-                console.error('Error deleting creator:', err);
-                alert('Failed to delete creator: ' + err.message);
+    const confirmDelete = async () => {
+        const { creatorId } = deleteModal;
+        
+        try {
+            const { error } = await supabase
+                .from('creators')
+                .delete()
+                .eq('id', creatorId);
+
+            if (error) {
+                throw error;
             }
+
+            setCreators(creators.filter(creator => creator.id !== creatorId));
+       
+            showSuccess(
+                "Creator deleted successfully!",
+                "Creator Deleted"
+            );
+       
+            hideDeleteModal();
+            
+        } catch (err) {
+            console.error('Error deleting creator:', err);
+            showError(
+                "Failed to delete creator: " + err.message,
+                "Delete Failed"
+            );
         }
     };
 
-    // Loading state
     if (loading) {
         return (
             <div style={{ textAlign: 'center', padding: '2rem' }}>
@@ -66,7 +97,6 @@ const CreatorsList = ({ onEdit, onView }) => {
         );
     }
 
-    // Error state
     if (error) {
         return (
             <div style={{ textAlign: 'center', padding: '2rem' }}>
@@ -80,7 +110,6 @@ const CreatorsList = ({ onEdit, onView }) => {
         );
     }
 
-    // Empty state
     if (creators.length === 0) {
         return (
             <div className="empty-state">
@@ -97,7 +126,7 @@ const CreatorsList = ({ onEdit, onView }) => {
         <div>
             <hgroup>
                 <h2 className="heading"> Your Favorite Creators</h2>
-                <p>Meet your favorite creators—because stalking celebrities in real life is frowned upon.</p>
+                <p>Meet the people behind the content you love.</p>
             </hgroup>
 
             <div className="creators-grid">
@@ -106,11 +135,23 @@ const CreatorsList = ({ onEdit, onView }) => {
                         key={creator.id}
                         creator={creator}
                         onEdit={onEdit}
-                        onDelete={handleDelete}
+                        onDelete={() => showDeleteConfirmation(creator.id, creator.name)}
                         onView={onView}
                     />
                 ))}
             </div>
+            
+            {/* Delete Confirmation Modal */}
+            <Modal
+                isOpen={deleteModal.isOpen}
+                onClose={hideDeleteModal}
+                title="Delete Creator"
+                message={`Are you sure you want to delete "${deleteModal.creatorName}"? This action cannot be undone.`}
+                type="confirm"
+                onConfirm={confirmDelete}
+                confirmText="Delete"
+                cancelText="Cancel"
+            />
         </div>
     );
 };
