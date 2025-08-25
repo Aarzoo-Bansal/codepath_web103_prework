@@ -35,7 +35,7 @@ Here's a walkthrough of implemented required features:
 👉🏿<img src='https://github.com/Aarzoo-Bansal/codepath_web103_prework/blob/main/Video_gif.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
-GIF created with ...  👉🏿 GIF tool here
+GIF created with Gifski
 <!-- Recommended tools:
 [Kap](https://getkap.co/) for macOS
 [ScreenToGif](https://www.screentogif.com/) for Windows
