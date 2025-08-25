@@ -1,4 +1,4 @@
-/* Modal.css - Enhanced Styling to match website design */
+/* Modal.css */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -280,7 +280,7 @@
     outline-offset: 3px;
 }
 
-/* Responsive design */
+
 @media (max-width: 768px) {
     .modal-container {
         margin: 1rem;
@@ -388,7 +388,7 @@
     }
 }
 
-/* Hover effects for the entire modal */
+
 .modal-container:hover {
     transform: translateY(-2px);
     box-shadow: 

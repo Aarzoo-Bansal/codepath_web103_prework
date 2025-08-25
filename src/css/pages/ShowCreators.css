@@ -22,7 +22,6 @@
 
 .creators-list {
   width: 100%;
-  /* Ensure no flex that might interfere with grid */
 }
 
 .content-title {
@@ -63,7 +62,6 @@
   margin: 0 auto;
 }
 
-/* Enhanced Creator Detail View */
 .creator-detail {
   max-width: 900px;
   margin: 0 auto;

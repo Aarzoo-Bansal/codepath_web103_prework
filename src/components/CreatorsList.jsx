@@ -14,7 +14,7 @@ const CreatorsList = ({ onEdit, onView }) => {
         creatorId: null,
         creatorName: ''
     });
-    
+
     const { showSuccess, showError } = useModal();
 
     useEffect(() => {
@@ -60,7 +60,7 @@ const CreatorsList = ({ onEdit, onView }) => {
 
     const confirmDelete = async () => {
         const { creatorId } = deleteModal;
-        
+
         try {
             const { error } = await supabase
                 .from('creators')
@@ -72,14 +72,14 @@ const CreatorsList = ({ onEdit, onView }) => {
             }
 
             setCreators(creators.filter(creator => creator.id !== creatorId));
-       
+
             showSuccess(
                 "Creator deleted successfully!",
                 "Creator Deleted"
             );
-       
+
             hideDeleteModal();
-            
+
         } catch (err) {
             console.error('Error deleting creator:', err);
             showError(
@@ -140,8 +140,7 @@ const CreatorsList = ({ onEdit, onView }) => {
                     />
                 ))}
             </div>
-            
-            {/* Delete Confirmation Modal */}
+
             <Modal
                 isOpen={deleteModal.isOpen}
                 onClose={hideDeleteModal}

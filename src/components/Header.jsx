@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../css/components/Header.css';
 
-const Header = ({ 
+const Header = ({
   backgroundImage,
   showNavigation = false,
   navigationItems = [],
@@ -10,7 +10,7 @@ const Header = ({
 }) => {
   return (
     <header className="header">
-      <div 
+      <div
         className="header-background"
         style={backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : {}}
       ></div>

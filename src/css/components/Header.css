@@ -42,7 +42,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  /* Default gradient background (fallback) */
   background: linear-gradient(
     135deg,
     #0a0a0a 0%,
@@ -50,7 +49,6 @@
     #16213e 50%,
     #0f3460 100%
   );
-  /* When custom image is provided, it will override the gradient */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -90,7 +88,6 @@
   letter-spacing: 0.05em;
   margin: 0;
   animation: pulse 3s ease-in-out infinite alternate;
-  /* Remove gradient text effect for better visibility */
 }
 
 @keyframes float {
@@ -117,7 +114,6 @@
   }
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
   .header {
     height: 100vh;

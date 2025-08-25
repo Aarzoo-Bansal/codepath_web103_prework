@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import '../css/components/Modal.css';
 
-const Modal = ({ 
-    isOpen, 
-    onClose, 
-    title, 
-    message, 
+const Modal = ({
+    isOpen,
+    onClose,
+    title,
+    message,
     type = 'info', // 'success', 'error', 'warning', 'confirm'
     onConfirm = null,
     confirmText = 'OK',
@@ -16,21 +16,19 @@ const Modal = ({
 
     useEffect(() => {
         if (isOpen) {
-           
+
             closeBtnRef.current?.focus();
-            
-            // Prevent body scroll
+
             document.body.style.overflow = 'hidden';
-            
-            // Add escape key listener
+
             const handleEscape = (e) => {
                 if (e.key === 'Escape') {
                     onClose();
                 }
             };
-            
+
             document.addEventListener('keydown', handleEscape);
-            
+
             return () => {
                 document.removeEventListener('keydown', handleEscape);
                 document.body.style.overflow = 'unset';
@@ -84,15 +82,15 @@ const Modal = ({
     };
 
     return (
-        <div 
-            className="modal-overlay" 
+        <div
+            className="modal-overlay"
             onClick={handleBackdropClick}
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-title"
             aria-describedby="modal-message"
         >
-            <div 
+            <div
                 ref={modalRef}
                 className={`modal-container ${type}`}
                 style={{
@@ -100,7 +98,7 @@ const Modal = ({
                 }}
             >
                 <div className="modal-header">
-                    <h3 
+                    <h3
                         id="modal-title"
                         className="modal-title"
                         style={{ color: getTypeColor() }}
@@ -108,40 +106,40 @@ const Modal = ({
                         <span className="modal-icon">{getTypeIcon()}</span>
                         {title}
                     </h3>
-                    <button 
+                    <button
                         ref={closeBtnRef}
                         className="modal-close-btn"
                         onClick={onClose}
                         aria-label="Close modal"
-                        style={{ 
-                            '--close-hover-color': getTypeColor() 
+                        style={{
+                            '--close-hover-color': getTypeColor()
                         }}
                     >
                         <span aria-hidden="true">✕</span>
                     </button>
                 </div>
-                
+
                 <div className="modal-body">
-                    <p 
-                        id="modal-message" 
+                    <p
+                        id="modal-message"
                         className="modal-message"
                     >
                         {message}
                     </p>
                 </div>
-                
+
                 <div className="modal-footer">
                     {type === 'confirm' ? (
                         <>
-                            <button 
-                                className="modal-btn secondary" 
+                            <button
+                                className="modal-btn secondary"
                                 onClick={onClose}
                                 aria-label={`Cancel: ${cancelText}`}
                             >
                                 {cancelText}
                             </button>
-                            <button 
-                                className="modal-btn primary" 
+                            <button
+                                className="modal-btn primary"
                                 onClick={handleConfirm}
                                 aria-label={`Confirm: ${confirmText}`}
                                 autoFocus
@@ -150,8 +148,8 @@ const Modal = ({
                             </button>
                         </>
                     ) : (
-                        <button 
-                            className={`modal-btn ${type === 'error' ? 'secondary' : 'primary'}`} 
+                        <button
+                            className={`modal-btn ${type === 'error' ? 'secondary' : 'primary'}`}
                             onClick={onClose}
                             aria-label={`Close: ${confirmText}`}
                             autoFocus
