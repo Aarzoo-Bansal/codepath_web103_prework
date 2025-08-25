@@ -1,39 +1,168 @@
+/* ShowCreators.css */
 .show-creators {
   min-height: 100vh;
-  width: 100%;
-  /* background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%); */
-  color: white;
+  background: var(--pico-background-color);
+}
+
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
 }
 
 .content-area {
-  padding: 0 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
 }
 
 .creators-container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.content-title {
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  text-align: center;
-  color: #87CEEB;
+  width: 100%;
 }
 
 .creators-list {
-  background-color: rgba(0, 0, 0, 0.3);
-  border-radius: 12px;
-  padding: 3rem;
-  min-height: 400px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+  /* Ensure no flex that might interfere with grid */
 }
 
-.no-creators-message {
-  font-size: 1.5rem;
-  color: #87CEEB;
+.content-title {
   text-align: center;
-  margin: 0;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, var(--pico-primary), var(--pico-primary-background));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.creators-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem 0;
+}
+
+.creators-header hgroup {
+  margin-bottom: 0;
+}
+
+.creators-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, var(--pico-primary), var(--pico-primary-background));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.creators-header p {
+  font-size: 1.1rem;
+  color: var(--pico-muted-color);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Creator Detail View */
+.creator-detail {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.creator-detail-image {
+  margin: 2rem auto;
+}
+
+.creator-detail .social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.creator-detail .social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--pico-secondary-background);
+  color: var(--pico-secondary-inverse);
+  text-decoration: none;
+  border-radius: var(--pico-border-radius);
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.creator-detail .social-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.creator-detail .social-link.youtube {
+  background: #ff0000;
+  color: white;
+}
+
+.creator-detail .social-link.instagram {
+  background: linear-gradient(45deg, #e1306c, #fd1d1d);
+  color: white;
+}
+
+.creator-detail .social-link.twitter {
+  background: #1da1f2;
+  color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .main-content {
+      padding: 1rem;
+  }
+  
+  .creators-header {
+      padding: 1rem 0;
+  }
+  
+  .creators-header h1 {
+      font-size: 2rem;
+  }
+  
+  .creator-detail .social-links {
+      flex-direction: column;
+      align-items: center;
+  }
+  
+  .creator-detail .social-link {
+      width: 200px;
+      justify-content: center;
+  }
+}
+
+/* Loading and Error States */
+.loading-state, .error-state {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.error-state p {
+  color: var(--pico-del-color);
+  margin-bottom: 1rem;
+}
+
+/* Animation for smooth transitions */
+.main-content > * {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(10px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
 }

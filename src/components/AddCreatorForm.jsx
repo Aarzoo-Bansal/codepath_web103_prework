@@ -3,18 +3,19 @@ import { supabase } from '../client';
 import '../css/components/AddCreatorForm.css';
 import { FaYoutube } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa";
+import { FaTiktok } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 
 
 const AddCreatorForm = ({ onCancel, onSubmit }) => {
     const [creatorData, setCreatorData] = useState({
         name: '',
-        url: '',
+        tagline: '',
         description: '',
         instaURL: '',
         youtubeURL: '',
         twitterURL: '',
+        tiktokURL: ''
     });
 
     const handleChange = (e) => {
@@ -42,15 +43,20 @@ const AddCreatorForm = ({ onCancel, onSubmit }) => {
         if(creatorData.twitterURL){
             creatorData.twitterURL = 'https://x.com/' + creatorData.twitterURL;
         }
+        if(creatorData.tiktokURL){
+            creatorData.tiktokURL = 'https://www.tiktok.com/@' + creatorData.tiktokURL;
+        }
         
 
         const { data, error } = await supabase
             .from('creators')
             .insert({
                 name: creatorData.name,
+                tagline: creatorData.tagline,
                 instaURL: creatorData.instaURL,
                 youtubeURL: creatorData.youtubeURL,
                 twitterURL: creatorData.twitterURL,
+                tiktokURL: creatorData.tiktokURL,
                 description: creatorData.description,
                 imageURL: creatorData.imageURL
             })
@@ -83,6 +89,22 @@ const AddCreatorForm = ({ onCancel, onSubmit }) => {
                                     type="text"
                                     name="name"
                                     value={creatorData.name}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </label>
+
+                        </div>
+
+                        <div className="individual-input">
+                            <label className='label'>
+                                Tagline
+                                <br></br>
+                                <small className="tips">Briefly describe what this creator is known for</small>
+                                <input
+                                    type="text"
+                                    name="tagline"
+                                    value={creatorData.tagline}
                                     onChange={handleChange}
                                     required
                                 />
@@ -176,12 +198,32 @@ const AddCreatorForm = ({ onCancel, onSubmit }) => {
                                     </span>
                                 </span>
                                 <br></br>
-                                <small className="tips">The creator's Instagram handle (without the @)  </small>
+                                <small className="tips">The creator's X handle (without the @)  </small>
 
                                 <input
                                     type="text"
                                     name="twitterURL"
                                     value={creatorData.twitterURL}
+                                    onChange={handleChange}
+                                />
+                            </label>
+
+                            <label className='label' style={{padding: '10px'}}>
+                                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '10px' , marginBottom: '5px'}}>
+                                    <span style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                                        <span className="fa-brands fa-instagram" aria-hidden="true" style={{ display: 'flex', alignItems: 'center' }}>
+                                            <FaTiktok />
+                                        </span>
+                                        <span style={{ fontSize: '20px', marginLeft: '10px', display: 'flex', alignItems: 'center' }}>Tiktok</span>
+                                    </span>
+                                </span>
+                                <br></br>
+                                <small className="tips">The creator's Tiktok handle (without the @)  </small>
+
+                                <input
+                                    type="text"
+                                    name="tiktokURL"
+                                    value={creatorData.tiktokURL}
                                     onChange={handleChange}
                                 />
                             </label>

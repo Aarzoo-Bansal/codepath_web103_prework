@@ -1,0 +1,462 @@
+/* CreatorCard.css - Enhanced Styling with PicoCSS Variables */
+.creator-card {
+    border-radius: 16px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    display: block;
+    height: 480px;
+    width: 100%;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background: var(--pico-card-background-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+}
+
+.creator-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    border-color: var(--pico-primary);
+}
+
+.creator-card:active {
+    transform: translateY(-4px) scale(1.01);
+    transition: all 0.1s ease;
+}
+
+/* Creator Image Container - full card background */
+.creator-image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Image Overlay for better text readability */
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.05) 0%,
+        rgba(0, 0, 0, 0.2) 30%,
+        rgba(0, 0, 0, 0.4) 60%,
+        rgba(0, 0, 0, 0.85) 100%
+    );
+    z-index: 1;
+    transition: opacity 0.3s ease;
+}
+
+.creator-card:hover .image-overlay {
+    opacity: 0.9;
+}
+
+/* Placeholder when no image - use PicoCSS colors */
+.creator-image-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--pico-primary-hover), var(--pico-primary));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+}
+
+.creator-image-placeholder span {
+    font-size: 4rem;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    opacity: 0.9;
+}
+
+/* Action Buttons - using PicoCSS button styles */
+.card-actions {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 10;
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.creator-card:hover .card-actions {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    backdrop-filter: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 11;
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+    background: rgba(0, 0, 0, 0.8);
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.view-btn:hover {
+    background: rgba(0, 123, 255, 0.8);
+    color: white;
+    border: none;
+    transform: scale(1.1) rotate(5deg);
+}
+
+.edit-btn:hover {
+    background: rgba(255, 193, 7, 0.8);
+    color: white;
+    border: none;
+    transform: scale(1.1) rotate(-5deg);
+}
+
+.delete-btn:hover {
+    background: rgba(220, 53, 69, 0.8);
+    color: white;
+    border: none;
+    transform: scale(1.1) rotate(10deg);
+}
+
+/* Content positioned at bottom */
+.card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: 24px;
+    text-align: center;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+.creator-card:hover .card-content {
+    transform: translateY(-5px);
+}
+
+/* Creator Info */
+.creator-info {
+    margin-bottom: 20px;
+}
+
+.creator-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 12px 0;
+    color: white;
+    line-height: 1.2;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.9);
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.creator-card:hover .creator-name {
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 1);
+}
+
+/* For cards without images, use PicoCSS text colors */
+.creator-card .creator-image-placeholder ~ .card-content .creator-name {
+    color: var(--pico-color);
+    text-shadow: none;
+}
+
+.creator-card .creator-image-placeholder ~ .card-content .creator-description {
+    color: var(--pico-muted-color);
+    text-shadow: none;
+}
+
+.creator-description {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0 0 20px 0;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
+    opacity: 0.9;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.creator-card:hover .creator-description {
+    opacity: 1;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 1);
+}
+
+/* Social Links */
+.social-links {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+}
+
+.creator-card:hover .social-links {
+    opacity: 1;
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-size: 1.4rem;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.social-link:hover::before {
+    left: 100%;
+}
+
+.social-link:hover {
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Social media specific colors */
+.social-link.youtube {
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+    color: white;
+}
+
+.social-link.youtube:hover {
+    background: linear-gradient(135deg, #cc0000, #990000);
+    border-color: #ff0000;
+    box-shadow: 0 8px 25px rgba(255, 0, 0, 0.5);
+}
+
+.social-link.instagram {
+    background: linear-gradient(135deg, #e1306c, #fd1d1d, #fcb045);
+    color: white;
+}
+
+.social-link.instagram:hover {
+    background: linear-gradient(135deg, #c13584, #e1306c, #fd1d1d);
+    border-color: #e1306c;
+    box-shadow: 0 8px 25px rgba(225, 48, 108, 0.5);
+}
+
+.social-link.twitter {
+    background: linear-gradient(135deg, #1da1f2, #0d95e8);
+    color: white;
+}
+
+.social-link.twitter:hover {
+    background: linear-gradient(135deg, #0d95e8, #0a7bc7);
+    border-color: #1da1f2;
+    box-shadow: 0 8px 25px rgba(29, 161, 242, 0.5);
+}
+
+.social-link.tiktok {
+    background: linear-gradient(135deg, #000000, #25f4ee, #fe2c55);
+    color: white;
+}
+
+.social-link.tiktok:hover {
+    background: linear-gradient(135deg, #fe2c55, #25f4ee, #000000);
+    border-color: #fe2c55;
+    box-shadow: 0 8px 25px rgba(254, 44, 85, 0.5);
+}
+
+/* Empty State - using PicoCSS styles */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--pico-muted-color);
+    background: var(--pico-card-background-color);
+    border-radius: 16px;
+    border: 1px solid var(--pico-border-color);
+    margin: 2rem 0;
+}
+
+.empty-state h3 {
+    margin-bottom: 1rem;
+    color: var(--pico-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.empty-state p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+
+/* Grid Layout for Multiple Cards */
+.creators-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+    width: 100%;
+    justify-content: center;
+    max-width: 100%;
+}
+
+/* Dynamic centering based on number of items */
+.creators-grid {
+    display: grid;
+    gap: 2rem;
+    padding: 2rem 0;
+    width: 100%;
+    justify-items: center;
+    justify-content: center;
+}
+
+/* Responsive breakpoints with centering */
+@media (min-width: 1400px) {
+    .creators-grid {
+        grid-template-columns: repeat(auto-fit, minmax(340px, 420px));
+        max-width: 1760px; /* 4 cards * 420px + gaps */
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1399px) {
+    .creators-grid {
+        grid-template-columns: repeat(auto-fit, minmax(340px, 400px));
+        max-width: 1320px; /* 3 cards * 400px + gaps */
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .creators-grid {
+        grid-template-columns: repeat(auto-fit, minmax(340px, 480px));
+        max-width: 1000px; /* 2 cards * 480px + gap */
+        margin: 0 auto;
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .creators-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+        margin: 0 auto;
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+    
+    .creator-card {
+        height: 430px;
+    }
+    
+    .creator-name {
+        font-size: 1.3rem;
+    }
+    
+    .creator-description {
+        font-size: 0.9rem;
+    }
+    
+    .social-link {
+        width: 42px;
+        height: 42px;
+        font-size: 1.2rem;
+    }
+    
+    .action-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+    
+    .card-content {
+        padding: 20px;
+    }
+    
+    .card-actions {
+        top: 12px;
+        right: 12px;
+        gap: 6px;
+    }
+}
+
+/* Loading and Error States */
+.loading-state, .error-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--pico-card-background-color);
+    border-radius: 16px;
+    border: 1px solid var(--pico-border-color);
+    margin: 2rem 0;
+}
+
+.loading-state p {
+    color: var(--pico-muted-color);
+    font-size: 1.1rem;
+}
+
+.error-state p {
+    color: var(--pico-del-color);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Enhanced focus states for accessibility */
+.creator-card:focus-within {
+    outline: 2px solid var(--pico-primary);
+    outline-offset: 2px;
+}
+
+.action-btn:focus {
+    outline: 2px solid var(--pico-primary);
+    outline-offset: 2px;
+}
+
+.social-link:focus {
+    outline: 2px solid var(--pico-primary);
+    outline-offset: 2px;
+}
